@@ -1,0 +1,6 @@
+target
+reports
+out
+default
+.idea
+*.iml
