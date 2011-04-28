@@ -7,7 +7,7 @@ public class XmlCommentBuilder implements XmlStandaloneNodeBuilder {
     private final String comment;
 
     public XmlCommentBuilder(String comment) {
-        this.comment = comment;
+        this.comment = comment!=null?comment:"";
     }
 
     public Node build(Document document) {

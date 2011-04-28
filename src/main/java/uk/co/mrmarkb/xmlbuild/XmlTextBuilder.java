@@ -7,7 +7,7 @@ public class XmlTextBuilder implements XmlStandaloneNodeBuilder {
     private final String text;
 
     public XmlTextBuilder(String text) {
-        this.text = text;
+            this.text = text!= null?text:"";
     }
 
     public Node build(Document document) {

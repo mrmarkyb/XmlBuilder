@@ -3,12 +3,14 @@ package uk.co.mrmarkyb.xmlbuild;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import uk.co.mrmarkb.xmlbuild.XmlBuilderFactory;
+import uk.co.mrmarkb.xmlbuild.XmlElementBuilder;
+import uk.co.mrmarkb.xmlbuild.XmlRenderer;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.containsString;
+import static uk.co.mrmarkb.xmlbuild.XmlBuilderFactory.*;
 import static uk.co.mrmarkb.xmlbuild.XmlRenderer.render;
 
 public class XmlRendererTest {
@@ -20,7 +22,7 @@ public class XmlRendererTest {
 
     @Test
     public void rendersXmlBuilderWithoutHeaderAndWithoutPrettyPrint() {
-        assertThat(render(XmlBuilderFactory.element("thing")).withXmlHeader(false).withPrettyPrint(false).toString(), is("<thing/>"));
+        assertThat(render(element("thing")).withXmlHeader(false).withPrettyPrint(false).toString(), is("<thing/>"));
     }
 
     @Test
@@ -41,7 +43,20 @@ public class XmlRendererTest {
 
     @Test
     public void outputTextInitialisedWithNull() throws Exception {
+        XmlElementBuilder builder = element("foo").with(text(null));
+        XmlRenderer.render(builder).toString();
+    }
 
+    @Test
+    public void outputAttributeInitialisedWithNull() throws Exception {
+        XmlElementBuilder builder = element("foo").with(attribute("att", null));
+        XmlRenderer.render(builder).toString();
+    }
+
+    @Test
+    public void outputCommentInitialisedWithNull() throws Exception {
+        XmlElementBuilder builder = element("foo").with(comment(null));
+        XmlRenderer.render(builder).toString();
     }
 
     @Test

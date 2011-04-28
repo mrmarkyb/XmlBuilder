@@ -18,5 +18,14 @@ public class XmlTextBuilderTest {
         Node actualText = new XmlTextBuilder("hello there").build(someDocument);
         assertThat(actualText, sameNodeAs(expected));
     }
+    
+    @Test
+    public void buildTextNodeReplaceNullWithEmptyString() {
+        Document someDocument = DocumentHelper.someDocument();
+        Text expected = someDocument.createTextNode("");
+        Node actualText = new XmlTextBuilder(null).build(someDocument);
+        assertThat(actualText, sameNodeAs(expected));
+    }
+
 
 }
