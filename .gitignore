@@ -4,3 +4,5 @@ out
 default
 .idea
 *.iml
+*.ipr
+*.iws

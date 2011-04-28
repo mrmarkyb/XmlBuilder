@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import uk.co.mrmarkb.xmlbuild.XmlBuilderFactory;
-import uk.co.mrmarkb.xmlbuild.XmlOutput;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -12,7 +11,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.containsString;
 import static uk.co.mrmarkb.xmlbuild.XmlRenderer.render;
 
-public class XmlOutputTest {
+public class XmlRendererTest {
 
     @Test
     public void rendersNodeWithoutHeaderAndWithoutPrettyPrint() {
@@ -41,6 +40,11 @@ public class XmlOutputTest {
     }
 
     @Test
+    public void outputTextInitialisedWithNull() throws Exception {
+
+    }
+
+    @Test
     public void outputWithoutPrettyPrint() {
         String rendered = render(someW3cNode()).withPrettyPrint(false).toString();
         assertThat(rendered, not(containsString("\n")));
@@ -51,7 +55,7 @@ public class XmlOutputTest {
     }
 
     private Element someW3cNodeWithName(String name) {
-        Document document = XmlOutput.createDocument();
+        Document document = DocumentHelper.someDocument();
         return document.createElement(name);
     }
 
