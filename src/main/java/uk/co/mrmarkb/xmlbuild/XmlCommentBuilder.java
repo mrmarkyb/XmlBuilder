@@ -10,6 +10,7 @@ public class XmlCommentBuilder implements XmlStandaloneNodeBuilder {
         this.comment = comment!=null?comment:"";
     }
 
+    @Override
     public Node build(Document document) {
         return document.createComment(comment);
     }

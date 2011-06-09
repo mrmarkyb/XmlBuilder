@@ -8,7 +8,6 @@ import org.w3c.dom.NodeList;
 
 import static uk.co.mrmarkb.xmlbuild.XmlRenderer.render;
 
-
 public class Matchers {
     public static boolean safeEquals(Object lhs, Object rhs) {
         if (lhs == null) {
@@ -26,6 +25,7 @@ public class Matchers {
                 return nodesAreSame(lhs, rhs);
             }
 
+            @Override
             public void describeTo(Description description) {
                 description.appendText("expected:" +
                         render(lhs).withXmlHeader(false).toString() +

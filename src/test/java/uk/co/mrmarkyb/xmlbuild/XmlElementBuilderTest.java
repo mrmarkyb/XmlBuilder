@@ -65,6 +65,4 @@ public class XmlElementBuilderTest {
         String actualValue = element.getChildNodes().item(0).getNodeValue();
         assertThat(actualValue, is(expectedValue));
     }
-
-
 }

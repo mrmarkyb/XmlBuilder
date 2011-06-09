@@ -10,6 +10,7 @@ public class XmlTextBuilder implements XmlStandaloneNodeBuilder {
             this.text = text!= null?text:"";
     }
 
+    @Override
     public Node build(Document document) {
         return document.createTextNode(text);
     }

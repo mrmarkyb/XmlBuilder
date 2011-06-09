@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import uk.co.mrmarkb.xmlbuild.XmlElementBuilder;
-import uk.co.mrmarkb.xmlbuild.XmlRenderer;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -44,19 +43,19 @@ public class XmlRendererTest {
     @Test
     public void outputTextInitialisedWithNull() throws Exception {
         XmlElementBuilder builder = element("foo").with(text(null));
-        XmlRenderer.render(builder).toString();
+        render(builder).toString();
     }
 
     @Test
     public void outputAttributeInitialisedWithNull() throws Exception {
         XmlElementBuilder builder = element("foo").with(attribute("att", null));
-        XmlRenderer.render(builder).toString();
+        render(builder).toString();
     }
 
     @Test
     public void outputCommentInitialisedWithNull() throws Exception {
         XmlElementBuilder builder = element("foo").with(comment(null));
-        XmlRenderer.render(builder).toString();
+        render(builder).toString();
     }
 
     @Test

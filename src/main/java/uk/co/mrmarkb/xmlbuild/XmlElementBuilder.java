@@ -25,6 +25,7 @@ public class XmlElementBuilder implements XmlStandaloneNodeBuilder {
         return this;
     }
 
+    @Override
     public Element build(Document document) {
         Element element = document.createElementNS(qName.getNamespaceURI(), qName.getLocalPart());
         element.setTextContent(value);
