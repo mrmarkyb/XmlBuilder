@@ -4,5 +4,5 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 public interface XmlBuilder {
-    Node build(Document document);
+    public Node build(Document document);
 }

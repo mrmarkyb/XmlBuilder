@@ -5,7 +5,7 @@ import org.w3c.dom.Document;
 
 import javax.xml.namespace.QName;
 
-public class XmlAttributeBuilder implements XmlBuilder{
+public class XmlAttributeBuilder implements XmlBuilder {
     private final String value;
     private final QName qName;
 
@@ -17,6 +17,7 @@ public class XmlAttributeBuilder implements XmlBuilder{
     @Override
     public Attr build(Document document) {
         Attr attribute = document.createAttributeNS(qName.getNamespaceURI(), qName.getLocalPart());
+        attribute.setPrefix(qName.getPrefix());
         attribute.setValue(value);
         return attribute;
     }

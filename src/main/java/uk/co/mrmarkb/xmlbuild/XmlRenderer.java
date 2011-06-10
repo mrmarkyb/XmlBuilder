@@ -25,6 +25,10 @@ public class XmlRenderer {
         return new XmlRenderer(wrapNodeInDocument(node));
     }
 
+    public static XmlRenderer render(Document document) {
+        return new XmlRenderer(document);
+    }
+
     public static XmlRenderer render(XmlBuilder builder) {
         Document document = createDocument();
         document.appendChild(builder.build(document));
@@ -37,6 +41,7 @@ public class XmlRenderer {
         StringWriter target = new StringWriter();
         try {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
+
             if (!useHeader) {
                 transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             }
@@ -49,7 +54,6 @@ public class XmlRenderer {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
         return target.toString();
     }
 
@@ -63,6 +67,7 @@ public class XmlRenderer {
     private static Document createDocument() {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true);
             DocumentBuilder docBuilder = factory.newDocumentBuilder();
             return docBuilder.newDocument();
         } catch (Exception e) {
