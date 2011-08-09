@@ -16,15 +16,16 @@ import static javax.xml.XMLConstants.XMLNS_ATTRIBUTE;
 import static javax.xml.XMLConstants.XMLNS_ATTRIBUTE_NS_URI;
 
 public class XmlDocumentBuilder {
-    private String rootName;
-    private  XmlBuilderFactory.NamespaceUriPrefixMapping prefixMapping;
-
+    private final String rootName;
+    private final XmlBuilderFactory.NamespaceUriPrefixMapping prefixMapping;
+    private final Set<XmlBuilderFactory.NamespaceUriPrefixMapping> namespaceDeclarations = new HashSet<XmlBuilderFactory.NamespaceUriPrefixMapping>();
+    private final Set<XmlAttributeBuilder> attributeBuilders = new HashSet<XmlAttributeBuilder>();
+    private final List<XmlStandaloneNodeBuilder> childNodeBuilders = new ArrayList<XmlStandaloneNodeBuilder>();
     private String defaultNamespaceName;
-    private Set<XmlBuilderFactory.NamespaceUriPrefixMapping> namespaceDeclarations = new HashSet<XmlBuilderFactory.NamespaceUriPrefixMapping>();
-    private List<XmlStandaloneNodeBuilder> xmlBuilders=new ArrayList<XmlStandaloneNodeBuilder>();
 
     public XmlDocumentBuilder(String rootName) {
         this.rootName = rootName;
+        this.prefixMapping = null;
         //this.prefixMapping = new XmlBuilderFactory.NamespaceUriPrefixMapping(NULL_NS_URI,DEFAULT_NS_PREFIX);
     }
 
@@ -42,13 +43,17 @@ public class XmlDocumentBuilder {
         } else {
             documentElement = document.createElementNS(prefixMapping.getUri(), prefixMapping.qualify(rootName));
         }
-        
+
         documentElement.setAttributeNS(XMLNS_ATTRIBUTE_NS_URI, XMLNS_ATTRIBUTE, defaultNamespaceName);
         for (XmlBuilderFactory.NamespaceUriPrefixMapping nsMapping : namespaceDeclarations) {
             documentElement.setAttributeNS(XMLNS_ATTRIBUTE_NS_URI, XMLNS_ATTRIBUTE + ":" + nsMapping.getPrefix(), nsMapping.getUri());
         }
 
-        for (XmlStandaloneNodeBuilder xmlBuilder : xmlBuilders) {
+        for (XmlAttributeBuilder attributeBuilder : attributeBuilders) {
+            documentElement.setAttributeNode(attributeBuilder.build(document));
+        }
+
+        for (XmlStandaloneNodeBuilder xmlBuilder : childNodeBuilders) {
             documentElement.appendChild(xmlBuilder.build(document));
         }
 
@@ -81,7 +86,12 @@ public class XmlDocumentBuilder {
     }
 
     public XmlDocumentBuilder with(XmlStandaloneNodeBuilder... xmlBuilders) {
-        this.xmlBuilders.addAll(asList(xmlBuilders));
+        this.childNodeBuilders.addAll(asList(xmlBuilders));
+        return this;
+    }
+
+    public XmlDocumentBuilder with(XmlAttributeBuilder... attributeBuilders) {
+        this.attributeBuilders.addAll(asList(attributeBuilders));
         return this;
     }
 }

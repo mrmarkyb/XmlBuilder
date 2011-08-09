@@ -12,8 +12,11 @@ import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.internal.matchers.StringContains.containsString;
 import static uk.co.mrmarkb.xmlbuild.XmlBuilderFactory.*;
+import static uk.co.mrmarkb.xmlbuild.XmlRenderer.render;
 import static uk.co.mrmarkyb.xmlbuild.Matchers.sameNodeAs;
+import static uk.co.mrmarkyb.xmlbuild.Namespaces.BA;
 import static uk.co.mrmarkyb.xmlbuild.Namespaces.FU;
 
 public class XmlElementBuilderTest {
@@ -22,7 +25,7 @@ public class XmlElementBuilderTest {
 
     @Before
     public void setUp() throws Exception {
-        someDocument = DocumentHelper.someDocument();
+        someDocument = document("blah").withDefaultNamespace(BA).build();
     }
 
     @Test
@@ -64,5 +67,15 @@ public class XmlElementBuilderTest {
         Element element = element(FU, "anElement").with(comment(expectedValue)).build(someDocument);
         String actualValue = element.getChildNodes().item(0).getNodeValue();
         assertThat(actualValue, is(expectedValue));
+    }
+    
+    @Test
+    public void canHaveNoNamespace() throws Exception {
+        Document document = document("blah")
+                .withDefaultNamespace(BA)
+                .with(element("anElement").with(text("value"))).build();
+        String s = render(document).toString();
+        System.out.println("s = " + s);
+        assertThat(s, containsString("<anElement>value</anElement>"));
     }
 }

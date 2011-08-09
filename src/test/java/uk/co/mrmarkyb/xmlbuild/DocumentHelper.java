@@ -11,7 +11,7 @@ public class DocumentHelper {
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setNamespaceAware(true);
-           DocumentBuilder docBuilder = factory.newDocumentBuilder();
+            DocumentBuilder docBuilder = factory.newDocumentBuilder();
             return docBuilder.newDocument();
         } catch (Exception e) {
             throw new RuntimeException(e);

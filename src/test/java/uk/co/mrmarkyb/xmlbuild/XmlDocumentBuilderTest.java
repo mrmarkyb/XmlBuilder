@@ -19,7 +19,7 @@ import static uk.co.mrmarkyb.xmlbuild.Namespaces.BA;
 import static uk.co.mrmarkyb.xmlbuild.Namespaces.FU;
 
 public class XmlDocumentBuilderTest {
-    
+
     @Test
     public void buildsDocumentWithNoChildElements() throws Exception {
         Document document = document("root").build();
@@ -55,7 +55,61 @@ public class XmlDocumentBuilderTest {
                                 text("someText")
                         )
                 ).build();
-        assertThat(render(document).toString(), containsString("<ba:otherElement>"));
+
+        assertThat(stringified(document), containsString("<ba:otherElement>"));
+    }
+
+    @Test
+    public void buildsDocumentWithRootElementInDefaultNamespaceOneNestedNodeInDefaultNamespace() throws Exception {
+        Document document = document("anElement")
+                .withDefaultNamespace(FU)
+                .with(
+                        element("otherElement").with(
+                                text("someText")
+                        )
+                ).build();
+
+        assertThat(stringified(document), containsString("<otherElement>"));
+    }
+
+    @Test
+    public void buildDocumentWithAttributesInRootElement() throws Exception {
+        Document document = document("rootElement")
+                .with(attribute("attr1", "value1"),
+                        attribute("attr2", "value2")
+                ).build();
+        assertThat(document.getDocumentElement(), hasAttribute("attr1", "value1"));
+        assertThat(document.getDocumentElement(), hasAttribute("attr2", "value2"));
+    }
+
+    @Test
+    public void buildDocumentWithAttributesAndNamespaceInRootElement() throws Exception {
+        Document document = document("rootElement")
+                .withDefaultNamespace(BA)
+                .with(attribute("attr1", "value1"),
+                        attribute("attr2", "value2")
+                ).build();
+        assertThat(document.getDocumentElement(), hasDefaultNamespaceDeclarationOf(BA));
+        assertThat(document.getDocumentElement(), hasAttribute("attr1", "value1"));
+        assertThat(document.getDocumentElement(), hasAttribute("attr2", "value2"));
+    }
+
+    private Matcher<Element> hasAttribute(final String name, final String value) {
+        return new TypeSafeMatcher<Element>() {
+            @Override
+            public boolean matchesSafely(Element element) {
+                return element.hasAttribute(name) && element.getAttribute(name).equals(value);
+            }
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText(String.format("attribute named [%s] with value [%s]", name, value));
+            }
+        };
+    }
+
+    private String stringified(Document document) {
+        return render(document).toString();
     }
 
     private static Matcher<Element> hasDefaultNamespaceDeclarationOf(final String defaultNamespaceName) {
@@ -81,7 +135,7 @@ public class XmlDocumentBuilderTest {
 
             @Override
             public void describeTo(Description description) {
-                description.appendText(String.format("expected child node count [%d]",expectedCount));
+                description.appendText(String.format("expected child node count [%d]", expectedCount));
             }
         };
     }
