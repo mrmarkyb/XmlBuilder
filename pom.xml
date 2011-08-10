@@ -25,7 +25,7 @@
         <repository>
             <id>netstream-repository</id>
             <name>Releases</name>
-            <url>http://teamcity.is.uk.easynet.net:8081/artifactory/libs-releases-local</url>
+            <url>http://repo.sns.sky.com:8081/artifactory/ext-releases-local</url>
         </repository>
     </distributionManagement>
 
