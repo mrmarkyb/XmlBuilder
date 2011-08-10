@@ -74,8 +74,6 @@ public class XmlElementBuilderTest {
         Document document = document("blah")
                 .withDefaultNamespace(BA)
                 .with(element("anElement").with(text("value"))).build();
-        String s = render(document).toString();
-        System.out.println("s = " + s);
-        assertThat(s, containsString("<anElement>value</anElement>"));
+        assertThat(render(document).toString(), containsString("<anElement>value</anElement>"));
     }
 }

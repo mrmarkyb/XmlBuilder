@@ -17,8 +17,8 @@ import static javax.xml.XMLConstants.XMLNS_ATTRIBUTE_NS_URI;
 
 public class XmlDocumentBuilder {
     private final String rootName;
-    private final XmlBuilderFactory.NamespaceUriPrefixMapping prefixMapping;
-    private final Set<XmlBuilderFactory.NamespaceUriPrefixMapping> namespaceDeclarations = new HashSet<XmlBuilderFactory.NamespaceUriPrefixMapping>();
+    private final NamespaceUriPrefixMapping prefixMapping;
+    private final Set<NamespaceUriPrefixMapping> namespaceDeclarations = new HashSet<NamespaceUriPrefixMapping>();
     private final Set<XmlAttributeBuilder> attributeBuilders = new HashSet<XmlAttributeBuilder>();
     private final List<XmlStandaloneNodeBuilder> childNodeBuilders = new ArrayList<XmlStandaloneNodeBuilder>();
     private String defaultNamespaceName;
@@ -29,7 +29,7 @@ public class XmlDocumentBuilder {
         //this.prefixMapping = new XmlBuilderFactory.NamespaceUriPrefixMapping(NULL_NS_URI,DEFAULT_NS_PREFIX);
     }
 
-    public XmlDocumentBuilder(String rootName, XmlBuilderFactory.NamespaceUriPrefixMapping prefixMapping) {
+    public XmlDocumentBuilder(String rootName, NamespaceUriPrefixMapping prefixMapping) {
         this.rootName = rootName;
         this.prefixMapping = prefixMapping;
     }
@@ -45,7 +45,7 @@ public class XmlDocumentBuilder {
         }
 
         documentElement.setAttributeNS(XMLNS_ATTRIBUTE_NS_URI, XMLNS_ATTRIBUTE, defaultNamespaceName);
-        for (XmlBuilderFactory.NamespaceUriPrefixMapping nsMapping : namespaceDeclarations) {
+        for (NamespaceUriPrefixMapping nsMapping : namespaceDeclarations) {
             documentElement.setAttributeNS(XMLNS_ATTRIBUTE_NS_URI, XMLNS_ATTRIBUTE + ":" + nsMapping.getPrefix(), nsMapping.getUri());
         }
 
@@ -66,7 +66,7 @@ public class XmlDocumentBuilder {
         return this;
     }
 
-    public XmlDocumentBuilder with(XmlBuilderFactory.NamespaceUriPrefixMapping namespaceUriPrefixMapping) {
+    public XmlDocumentBuilder with(NamespaceUriPrefixMapping namespaceUriPrefixMapping) {
         namespaceDeclarations.add(namespaceUriPrefixMapping);
         return this;
     }

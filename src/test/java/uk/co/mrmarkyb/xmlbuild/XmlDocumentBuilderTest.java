@@ -12,7 +12,7 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.containsString;
-import static uk.co.mrmarkb.xmlbuild.XmlBuilderFactory.NamespaceUriPrefixMapping.namespace;
+import static uk.co.mrmarkb.xmlbuild.NamespaceUriPrefixMapping.namespace;
 import static uk.co.mrmarkb.xmlbuild.XmlBuilderFactory.*;
 import static uk.co.mrmarkb.xmlbuild.XmlRenderer.render;
 import static uk.co.mrmarkyb.xmlbuild.Namespaces.BA;
