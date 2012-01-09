@@ -4,7 +4,7 @@
 
     <groupId>uk.co.mrmarkyb</groupId>
     <artifactId>XmlBuilder</artifactId>
-    <version>1.6-SNAPSHOT</version>
+    <version>1.6</version>
     <packaging>jar</packaging>
     <name>XmlBuilder</name>
 
