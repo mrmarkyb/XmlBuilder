@@ -26,6 +26,10 @@ public class XmlBuilderFactory {
         return new XmlTextElementBuilder(new QName(uri, name), value);
     }
 
+    public static XmlTextElementBuilder textElement(String name, String value) {
+        return new XmlTextElementBuilder(new QName(name), value);
+    }
+
     public static XmlStandaloneNodeBuilder comment(String comment) {
         return new XmlCommentBuilder(comment);
     }
