@@ -18,6 +18,14 @@ public class XmlBuilderFactory {
         return new XmlElementBuilder(new QName(namespaceUriPrefixMapping.getUri(), name, namespaceUriPrefixMapping.getPrefix()));
     }
 
+    public static XmlTextElementBuilder textElement(NamespaceUriPrefixMapping namespaceUriPrefixMapping, String name, String value) {
+        return new XmlTextElementBuilder(new QName(namespaceUriPrefixMapping.getUri(), name, namespaceUriPrefixMapping.getPrefix()), value);
+    }
+
+    public static XmlTextElementBuilder textElement(String uri, String name, String value) {
+        return new XmlTextElementBuilder(new QName(uri, name), value);
+    }
+
     public static XmlStandaloneNodeBuilder comment(String comment) {
         return new XmlCommentBuilder(comment);
     }
@@ -40,6 +48,14 @@ public class XmlBuilderFactory {
 
     public static XmlDocumentBuilder document(String rootName) {
         return new XmlDocumentBuilder(rootName);
+    }
+
+    public static XmlAttributeBuilder optional(XmlAttributeBuilder anAttribute) {
+        return anAttribute.isEmpty() ? null : anAttribute;
+    }
+
+    public static XmlStandaloneNodeBuilder optional(XmlTextElementBuilder child) {
+        return child.isEmpty() ? child.comment() : child;
     }
 
 }

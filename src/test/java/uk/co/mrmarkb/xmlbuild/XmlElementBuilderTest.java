@@ -1,7 +1,8 @@
-package uk.co.mrmarkyb.xmlbuild;
+package uk.co.mrmarkb.xmlbuild;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -11,13 +12,15 @@ import javax.xml.transform.TransformerException;
 import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.internal.matchers.StringContains.containsString;
+import static uk.co.mrmarkb.xmlbuild.Matchers.sameNodeAs;
+import static uk.co.mrmarkb.xmlbuild.Namespaces.BA;
+import static uk.co.mrmarkb.xmlbuild.Namespaces.FU;
 import static uk.co.mrmarkb.xmlbuild.XmlBuilderFactory.*;
+import static uk.co.mrmarkb.xmlbuild.XmlBuilderFactory.textElement;
 import static uk.co.mrmarkb.xmlbuild.XmlRenderer.render;
-import static uk.co.mrmarkyb.xmlbuild.Matchers.sameNodeAs;
-import static uk.co.mrmarkyb.xmlbuild.Namespaces.BA;
-import static uk.co.mrmarkyb.xmlbuild.Namespaces.FU;
 
 public class XmlElementBuilderTest {
 
@@ -44,6 +47,32 @@ public class XmlElementBuilderTest {
     }
 
     @Test
+    public void canHaveEmptyAttribute() throws Exception {
+        String expectedValue = null;
+        String attributeName = "anAttribute";
+        Element element = element(FU, "anElement").with(
+                attribute(attributeName, expectedValue)
+        ).build(someDocument);
+        String actualValue = element.getAttributeNode(attributeName).getValue();
+
+        assertThat(actualValue, is(""));
+    }
+
+    @Test
+    public void canHaveOptionalAttribute() throws Exception {
+        String expectedValue = null;
+        String attributeName = "anAttribute";
+        Element element = element(FU, "anElement").with(
+                optional(
+                        attribute(attributeName, expectedValue)
+                )
+        ).build(someDocument);
+        Attr actualAttribute = element.getAttributeNode(attributeName);
+
+        assertThat(actualAttribute, is(nullValue()));
+    }
+
+    @Test
     public void canHaveText() {
         String expectedValue = "my text";
         Element element = element(FU, "anElement").with(text(expectedValue)).build(someDocument);
@@ -62,13 +91,34 @@ public class XmlElementBuilderTest {
     }
 
     @Test
+    public void canHaveOptionalTextElement() throws Exception {
+        String expectedValue = "someValue";
+        Element element = element(FU, "elem").with(
+                optional(textElement("www.no.com", "child", expectedValue))
+        ).build(someDocument);
+
+        Node childNode = element.getChildNodes().item(0);
+        assertThat(childNode.getTextContent(), is(expectedValue));
+    }
+
+    @Test
+    public void rendersOptionalTextElementAsCommentWhenEmpty() throws Exception {
+        Element element = element(FU, "elem").with(
+                optional(textElement("www.no.com", "child", null))
+        ).build(someDocument);
+
+        Node childNode = element.getChildNodes().item(0);
+        assertThat(childNode.getNodeName(), is("#comment"));
+    }
+
+    @Test
     public void canHaveComment() {
         String expectedValue = "my comment";
         Element element = element(FU, "anElement").with(comment(expectedValue)).build(someDocument);
         String actualValue = element.getChildNodes().item(0).getNodeValue();
         assertThat(actualValue, is(expectedValue));
     }
-    
+
     @Test
     public void canHaveNoNamespace() throws Exception {
         Document document = document("blah")

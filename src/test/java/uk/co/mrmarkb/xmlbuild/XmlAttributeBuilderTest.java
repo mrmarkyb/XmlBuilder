@@ -1,4 +1,4 @@
-package uk.co.mrmarkyb.xmlbuild;
+package uk.co.mrmarkb.xmlbuild;
 
 import org.junit.Test;
 import org.w3c.dom.Attr;
@@ -7,7 +7,7 @@ import org.w3c.dom.Node;
 
 import static org.junit.Assert.assertThat;
 import static uk.co.mrmarkb.xmlbuild.XmlBuilderFactory.attribute;
-import static uk.co.mrmarkyb.xmlbuild.Matchers.sameNodeAs;
+import static uk.co.mrmarkb.xmlbuild.Matchers.sameNodeAs;
 
 public class XmlAttributeBuilderTest {
 

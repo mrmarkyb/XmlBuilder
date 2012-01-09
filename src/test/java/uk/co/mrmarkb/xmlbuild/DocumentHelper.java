@@ -1,4 +1,4 @@
-package uk.co.mrmarkyb.xmlbuild;
+package uk.co.mrmarkb.xmlbuild;
 
 import org.w3c.dom.Document;
 

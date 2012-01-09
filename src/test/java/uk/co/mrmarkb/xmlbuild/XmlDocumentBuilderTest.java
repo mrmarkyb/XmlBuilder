@@ -1,4 +1,4 @@
-package uk.co.mrmarkyb.xmlbuild;
+package uk.co.mrmarkb.xmlbuild;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -15,8 +15,8 @@ import static org.junit.matchers.JUnitMatchers.containsString;
 import static uk.co.mrmarkb.xmlbuild.NamespaceUriPrefixMapping.namespace;
 import static uk.co.mrmarkb.xmlbuild.XmlBuilderFactory.*;
 import static uk.co.mrmarkb.xmlbuild.XmlRenderer.render;
-import static uk.co.mrmarkyb.xmlbuild.Namespaces.BA;
-import static uk.co.mrmarkyb.xmlbuild.Namespaces.FU;
+import static uk.co.mrmarkb.xmlbuild.Namespaces.BA;
+import static uk.co.mrmarkb.xmlbuild.Namespaces.FU;
 
 public class XmlDocumentBuilderTest {
 

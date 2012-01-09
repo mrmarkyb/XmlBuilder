@@ -5,6 +5,8 @@ import org.w3c.dom.Document;
 
 import javax.xml.namespace.QName;
 
+import static uk.co.mrmarkb.xmlbuild.utils.YetAnotherStringUtils.isBlank;
+
 public class XmlAttributeBuilder implements XmlBuilder {
     private final String value;
     private final QName qName;
@@ -20,5 +22,9 @@ public class XmlAttributeBuilder implements XmlBuilder {
         attribute.setPrefix(qName.getPrefix());
         attribute.setValue(value);
         return attribute;
+    }
+
+    public boolean isEmpty() {
+        return isBlank(value);
     }
 }

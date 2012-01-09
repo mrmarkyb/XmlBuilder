@@ -1,13 +1,12 @@
-package uk.co.mrmarkyb.xmlbuild;
+package uk.co.mrmarkb.xmlbuild;
 
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
-import uk.co.mrmarkb.xmlbuild.XmlTextBuilder;
 
 import static org.junit.Assert.assertThat;
-import static uk.co.mrmarkyb.xmlbuild.Matchers.sameNodeAs;
+import static uk.co.mrmarkb.xmlbuild.Matchers.sameNodeAs;
 
 public class XmlTextBuilderTest {
 
@@ -18,7 +17,7 @@ public class XmlTextBuilderTest {
         Node actualText = new XmlTextBuilder("hello there").build(someDocument);
         assertThat(actualText, sameNodeAs(expected));
     }
-    
+
     @Test
     public void buildTextNodeReplaceNullWithEmptyString() {
         Document someDocument = DocumentHelper.someDocument();

@@ -1,13 +1,12 @@
-package uk.co.mrmarkyb.xmlbuild;
+package uk.co.mrmarkb.xmlbuild;
 
 import org.junit.Test;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
-import uk.co.mrmarkb.xmlbuild.XmlCommentBuilder;
 
 import static org.junit.Assert.assertThat;
-import static uk.co.mrmarkyb.xmlbuild.Matchers.sameNodeAs;
+import static uk.co.mrmarkb.xmlbuild.Matchers.sameNodeAs;
 
 public class XmlCommentBuilderTest {
 
@@ -18,7 +17,7 @@ public class XmlCommentBuilderTest {
         Node actualComment = new XmlCommentBuilder("a comment").build(someDocument);
         assertThat(actualComment, sameNodeAs(expected));
     }
-    
+
     @Test
     public void createsAnEmptyCommentForNullString() {
         Document someDocument = DocumentHelper.someDocument();

@@ -1,4 +1,4 @@
-package uk.co.mrmarkyb.xmlbuild;
+package uk.co.mrmarkb.xmlbuild;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -19,6 +19,7 @@ public class Matchers {
     public static Matcher<Node> sameNodeAs(final Node lhs) {
         return new TypeSafeMatcher<Node>() {
             private Node rhs;
+
             @Override
             public boolean matchesSafely(Node rhs) {
                 this.rhs = rhs;

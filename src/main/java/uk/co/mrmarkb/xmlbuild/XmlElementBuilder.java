@@ -17,8 +17,8 @@ public class XmlElementBuilder implements XmlStandaloneNodeBuilder {
         this.qName = qName;
     }
 
-    public XmlElementBuilder with(XmlAttributeBuilder... children) {
-        this.attributes = children;
+    public XmlElementBuilder with(XmlAttributeBuilder... attributes) {
+        this.attributes = attributes;
         return this;
     }
 
@@ -32,7 +32,9 @@ public class XmlElementBuilder implements XmlStandaloneNodeBuilder {
         Element element = createElement(document);
         element.setTextContent(value);
         for (XmlAttributeBuilder attributeBuilder : attributes) {
-            element.setAttributeNode(attributeBuilder.build(document));
+            if (attributeBuilder != null) {
+                element.setAttributeNode(attributeBuilder.build(document));
+            }
         }
         for (XmlBuilder child : children) {
             element.appendChild(child.build(document));
@@ -53,4 +55,5 @@ public class XmlElementBuilder implements XmlStandaloneNodeBuilder {
     private boolean hasNamespace() {
         return !isBlank(qName.getNamespaceURI());
     }
+
 }
