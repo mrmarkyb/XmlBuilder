@@ -19,4 +19,5 @@ public class XmlAttributeBuilderTest {
         Node actualAttribute = attribute("www.foo.com", "anAttribute", "myValue").build(someDocument);
         assertThat(actualAttribute, sameNodeAs(expected));
     }
+
 }

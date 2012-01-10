@@ -12,11 +12,10 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.containsString;
-import static uk.co.mrmarkb.xmlbuild.NamespaceUriPrefixMapping.namespace;
-import static uk.co.mrmarkb.xmlbuild.XmlBuilderFactory.*;
-import static uk.co.mrmarkb.xmlbuild.XmlRenderer.render;
 import static uk.co.mrmarkb.xmlbuild.Namespaces.BA;
 import static uk.co.mrmarkb.xmlbuild.Namespaces.FU;
+import static uk.co.mrmarkb.xmlbuild.XmlBuilderFactory.*;
+import static uk.co.mrmarkb.xmlbuild.XmlRenderer.render;
 
 public class XmlDocumentBuilderTest {
 
@@ -48,10 +47,10 @@ public class XmlDocumentBuilderTest {
     @Test
     public void buildsDocumentWithRootElementInDefaultNamespaceOneNestedNodeInOtherNamespace() throws Exception {
         Document document = document("anElement")
-                .withDefaultNamespace(FU)
-                .with(namespace(BA, "ba"))
+                .withDefaultNamespace(FU.getUri())
+                .with(BA)
                 .with(
-                        element(namespace(BA, "ba"), "otherElement").with(
+                        element(BA, "otherElement").with(
                                 text("someText")
                         )
                 ).build();
@@ -62,7 +61,7 @@ public class XmlDocumentBuilderTest {
     @Test
     public void buildsDocumentWithRootElementInDefaultNamespaceOneNestedNodeInDefaultNamespace() throws Exception {
         Document document = document("anElement")
-                .withDefaultNamespace(FU)
+                .withDefaultNamespace(FU.getUri())
                 .with(
                         element("otherElement").with(
                                 text("someText")
@@ -85,11 +84,11 @@ public class XmlDocumentBuilderTest {
     @Test
     public void buildDocumentWithAttributesAndNamespaceInRootElement() throws Exception {
         Document document = document("rootElement")
-                .withDefaultNamespace(BA)
+                .withDefaultNamespace(BA.getUri())
                 .with(attribute("attr1", "value1"),
                         attribute("attr2", "value2")
                 ).build();
-        assertThat(document.getDocumentElement(), hasDefaultNamespaceDeclarationOf(BA));
+        assertThat(document.getDocumentElement(), hasDefaultNamespaceDeclarationOf(BA.getUri()));
         assertThat(document.getDocumentElement(), hasAttribute("attr1", "value1"));
         assertThat(document.getDocumentElement(), hasAttribute("attr2", "value2"));
     }

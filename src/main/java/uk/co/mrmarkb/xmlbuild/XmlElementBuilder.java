@@ -9,12 +9,17 @@ import static uk.co.mrmarkb.xmlbuild.utils.YetAnotherStringUtils.isBlank;
 
 public class XmlElementBuilder implements XmlStandaloneNodeBuilder {
     private final QName qName;
-    private final String value = "";
+    private final String value;
     private XmlStandaloneNodeBuilder[] children = new XmlStandaloneNodeBuilder[0];
     private XmlAttributeBuilder[] attributes = new XmlAttributeBuilder[0];
 
     public XmlElementBuilder(QName qName) {
+        this(qName, "");
+    }
+
+    public XmlElementBuilder(QName qName, String value) {
         this.qName = qName;
+        this.value = value;
     }
 
     public XmlElementBuilder with(XmlAttributeBuilder... attributes) {
@@ -42,6 +47,20 @@ public class XmlElementBuilder implements XmlStandaloneNodeBuilder {
         return element;
     }
 
+    boolean isEmpty() {
+        return !hasAttributes()
+                && !hasChildren()
+                && isBlank(value);
+    }
+
+    String elementRootName() {
+        return qName.getLocalPart();
+    }
+
+    private boolean hasChildren() {
+        return children.length > 0;
+    }
+
     private Element createElement(Document document) {
         if (hasNamespace()) {
             Element element = document.createElementNS(qName.getNamespaceURI(), qName.getLocalPart());
@@ -56,4 +75,12 @@ public class XmlElementBuilder implements XmlStandaloneNodeBuilder {
         return !isBlank(qName.getNamespaceURI());
     }
 
+    private boolean hasAttributes() {
+        for (XmlAttributeBuilder attribute : attributes) {
+            if (attribute != null) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
